@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"gopkg.in/src-d/go-git.v4/internal/url"
+	"gopkg.in/src-d/go-git.v4/plumbing"
 	format "gopkg.in/src-d/go-git.v4/plumbing/format/config"
 )
 
@@ -353,7 +354,7 @@ func (c *RemoteConfig) Validate() error {
 		c.Fetch = []RefSpec{RefSpec(fmt.Sprintf(DefaultFetchRefSpec, c.Name))}
 	}
 
-	return nil
+	return plumbing.NewRemoteHEADReferenceName(c.Name).Validate()
 }
 
 func (c *RemoteConfig) unmarshal(s *format.Subsection) error {
